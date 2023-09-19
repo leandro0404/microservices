@@ -1,53 +1,56 @@
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 
-SHOW_PERSON_OUTLINE()
-
-title Container Diagram for api person
-
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
-
-title Container Diagram for api person
+title Container Diagram for API Person
 
 Person(user, "User", "User")
 
 System_Boundary(Leandro, "Leandro") {
+    System_Boundary(auth, "Authentication") {
+        Container(auth_service, "Auth Server", "Auth Server API", "Java Service", "Java", $sprite="java")
+        ContainerDb(db_auth, "Database", "Auth Database", "Data", $sprite="mysql")
+    }
 
-   System_Boundary(product, "Product") {
-
-    Container(site_a, "site A", "product a", "Java", $sprite="java")
-    Container(site_b, "site B", "product b", "Java", $sprite="java")
-
-   }
+    System_Boundary(product, "Product") {
+        Container(site_a, "Site A", "Product A", "Java", $sprite="java")
+        Container(site_b, "Site B", "Product B", "Java", $sprite="java")
+    }
+    
     System_Boundary(resource, "Resource") {
-    Container(auth_service, "Auth Server", "auth server API", "Java Service", "Java", $sprite="java")
-    Container(user_service, "User Service", "user API", "Java", $sprite="java")
-    Container(application_service, "Application Service", "Java", $sprite="java")
-    Container(account_service, "Account Service",  "Java", $sprite="java")
-  
-    ContainerDb(db_auth, "Database", "auth Database", "Data", $sprite="mysql")
-    ContainerDb(db_user, "Database", "user  Database", "Data", $sprite="mysql")
-    ContainerDb(db_application, "Database", "application Database", "Data", $sprite="mysql")
-    ContainerDb(db_account, "Database", "account Database", "Data", $sprite="mysql")
+        Container(user_service, "User Service", "User API", "Java", $sprite="java")
+        Container(application_service, "Application Service", "Java", $sprite="java")
+        Container(account_service, "Account Service",  "Java", $sprite="java")
 
-   }
-    Rel_L(user, site_a, "use", "Http")
-    Rel_R(user, site_b, "use", "Http")
+        ContainerDb(db_user, "Database", "User Database", "Data", $sprite="mysql")
+        ContainerDb(db_application, "Database", "Application Database", "Data", $sprite="mysql")
+        ContainerDb(db_account, "Database", "Account Database", "Data", $sprite="mysql")
+
+         Rel_R(auth_service, db_auth, "use", "Database")
+         Rel_R(user_service, db_user, "use", "Database")
+         Rel_R(application_service, db_application,  "use", "Database")
+         Rel_L(account_service, db_account,  "use", "Database")
+    }
+
+
+
+    Rel(user, auth_service, "use", "Http")
+    Rel(user, site_a, "use", "Http")
+    Rel(user, site_b, "use", "Http")
 
     Rel(site_a,auth_service, "use", "Http")
     Rel(site_a,user_service, "use", "Http")
     Rel(site_a,application_service,   "use", "Http")
     Rel(site_a,account_service,  "use", "Http")
 
+
+
     Rel(site_b,auth_service, "use", "Http")
     Rel(site_b,user_service, "use", "Http")
     Rel(site_b,application_service,   "use", "Http")
     Rel(site_b,account_service,  "use", "Http")
 
-    Rel(auth_service, db_auth, "use", "Database")
-    Rel(user_service, db_user, "use", "Database")
-    Rel(application_service, db_application,  "use", "Database")
-    Rel(account_service, db_account,  "use", "Database")
+  
 
+   
 }
 @enduml
