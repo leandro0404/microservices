@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Criar Novo Cliente</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<section class="h-100 gradient-form">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-8">
+
+                <div class="text-center">
+                    <h4 class="mt-1 mb-5 pb-1">Criar Novo Cliente</h4>
+                </div>
+
+                <form class="login-form" th:action="@{/clients/new}" method="post">
+
+
+                    <div class="form-group">
+                        <label for="id"> Id</label>
+                        <input type="text" class="form-control" name="id" id="id" th:value="${id}" readonly required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="authenticationMethods">Métodos de Autenticação</label>
+                        <select class="form-control" name="authenticationMethods" id="authenticationMethods">
+                            <option value="client_secret_basic">Client Secret Basic</option>
+                            <option value="client_secret_post">Client Secret Post</option>
+                            <option value="client_secret_jwt">Client Secret JWT</option>
+                            <option value="private_key_jwt">Private Key JWT</option>
+                            <option value="none">None</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="clientId">Cliente ID</label>
+                        <input type="text" class="form-control" placeholder="Digite o Cliente ID" name="clientId" id="clientId" required />
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="secretRequired" id="secretRequired"/>
+                        <label class="form-check-label" for="secretRequired">Secret Required</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="clientSecret">Client Secret</label>
+                        <input type="password" class="form-control" placeholder="Digite o Client Secret"
+                               name="clientSecret" id="clientSecret" required/>
+                    </div>
+
+                    <!-- Outros campos correspondentes à classe Client -->
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="scoped" id="scoped"/>
+                        <label class="form-check-label" for="scoped">Scoped</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="scope">Scopes</label>
+                        <select multiple class="form-control" name="scope" id="scope">
+                            <option value="openid">OpenID</option>
+                            <option value="profile">Profile</option>
+                            <option value="email">Email</option>
+                            <option value="address">Address</option>
+                            <option value="phone">Phone</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="authorizedGrantTypes">Authorized Grant Types</label>
+                        <select multiple class="form-control" name="authorizedGrantTypes" id="authorizedGrantTypes">
+                            <option value="authorization_code">Authorization Code</option>
+                            <option value="refresh_token">Refresh Token</option>
+                            <option value="client_credentials">Client Credentials</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="redirectUris">Redirect URIs</label>
+                        <input type="text" class="form-control"
+                               placeholder="Digite as Redirect URIs (separadas por vírgulas)" name="redirectUris"
+                               id="redirectUris"/>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="autoApprove" id="autoApprove"/>
+                        <label class="form-check-label" for="autoApprove">Auto Approve</label>
+                    </div>
+
+                    <div class="text-center pt-1 mb-5 pb-1">
+                        <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Criar
+                            Cliente
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

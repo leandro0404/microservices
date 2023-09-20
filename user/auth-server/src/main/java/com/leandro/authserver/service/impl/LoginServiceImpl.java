@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -18,10 +19,12 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public String layout(HttpServletRequest request, Model model) {
-        var client = clientService.findByRedirectUris(request.getHeader("Referer"));
 
-        if (client != null && client.getClientId().equals("app-site-b")) {
-            model.addAttribute("name", client.getClientName());
+
+        if (!ObjectUtils.isEmpty(request.getHeader("Referer")))
+        {
+
+         var client =   clientService.findByRedirectUris(request.getHeader("Referer"));
             model.addAttribute("clientId", client.getClientId());
             return client.getClientId();
         }

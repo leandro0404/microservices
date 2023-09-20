@@ -1,38 +1,33 @@
 package com.leandro.authserver.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
-import java.time.Instant;
-import java.util.List;
+import java.util.*;
 
-@Entity
-@Table(name = "client")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Document(collection = "registered_clients")
 public class Client {
 
     @Id
     private String id;
+
     private String clientId;
-    private Instant clientIdIssuedAt;
+    private Set<String> resourceIds = Collections.emptySet();
+    private boolean secretRequired;
     private String clientSecret;
-    private Instant clientSecretExpiresAt;
-    private String clientName;
-    @Column(length = 1000)
-    private String clientAuthenticationMethods;
-    @Column(length = 1000)
-    private String authorizationGrantTypes;
-    @Column(length = 1000)
-    private String redirectUris;
-    @Column(length = 1000)
-    private String scopes;
-    @Column(length = 2000)
-    private String clientSettings;
-    @Column(length = 2000)
-    private String tokenSettings;
+    private boolean scoped;
+    private Set<String> scope;
+    private Set<String> authenticationMethods;
+    private Set<AuthorizationGrantType> authorizedGrantTypes = Collections.emptySet();
+    private Set<String> redirectUris = new HashSet<>();
+    private Collection<GrantedAuthority> authorities;
+    private Integer accessTokenValiditySeconds;
+    private Integer refreshTokenValiditySeconds;
+    private boolean autoApprove;
+    private Map<String, Object> additionalInformation = new LinkedHashMap<>();
 
 }

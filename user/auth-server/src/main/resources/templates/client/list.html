@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Clientes</title>
+    <!-- Inclua o CSS do Bootstrap (substitua o caminho pelo seu arquivo Bootstrap) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Lista de Clientes</h1>
+
+    <div class="row">
+        <!-- Use Thymeleaf para iterar sobre a lista de clientes -->
+        <div th:each="client : ${clients}" class="col-md-6 mb-3">
+            <div class="card">
+                <!-- Use a classe "card-body" dentro de "card" para ocupar toda a largura do card -->
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${client.clientId}">Cliente</h5>
+                    <p class="card-text">
+                        <span th:text="'Secret Required: ' + ${client.secretRequired}"></span>
+                    </p>
+                    <p class="card-text">Métodos de Autenticação:
+                        <span th:each="method : ${client.authenticationMethods}" th:text="${method}"></span>
+                    </p>
+
+                    <p class="card-text">Scope:
+                    </p>
+                    <ul>
+                        <!-- Use Thymeleaf para iterar sobre a lista de scopes do cliente -->
+                        <li th:each="scope : ${client.scope}" th:text="${scope}"></li>
+                    </ul>
+                    <p></p>
+                    <p class="card-text">Grant Types:
+                    </p>
+                    <ul>
+                        <!-- Use Thymeleaf para iterar sobre a lista de grant types do cliente -->
+                        <li th:each="grantType : ${client.authorizedGrantTypes}" th:text="${grantType.value}"></li>
+                    </ul>
+                    <p></p>
+                    <p class="card-text">Redirect URIs:
+                    </p>
+                    <ul>
+                        <!-- Use Thymeleaf para iterar sobre a lista de redirect URIs do cliente -->
+                        <li th:each="uri : ${client.redirectUris}" th:text="${uri}"></li>
+                    </ul>
+                    <p></p>
+                    <p class="card-text" th:text="'Auto Approve: ' + ${client.autoApprove}">Auto Approve</p>
+                    <!-- Adicione mais informações conforme necessário -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-primary" href="/clients/new">Criar Novo Cliente</a>
+</div>
+</body>
+</html>

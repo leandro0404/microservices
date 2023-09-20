@@ -58,6 +58,4 @@ public class SecurityFilterConfig {
             .ignoring()
             .requestMatchers("/webjars/**", "/images/**", "/css/**", "/assets/**", "/favicon.ico");
   }
-
-
 }

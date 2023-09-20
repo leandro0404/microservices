@@ -1,5 +1,6 @@
 package com.leandro.authserver.controller;
 
+import com.leandro.authserver.repository.impl.JpaRegisteredClientRepository;
 import com.leandro.authserver.service.LoginService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private JpaRegisteredClientRepository jpaRegisteredClientRepository;
 
     @GetMapping("/login")
     public String login(HttpServletRequest request, Model model) {

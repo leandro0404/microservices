@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @AllArgsConstructor
 public class RegisterController {
 
-
     private LoginService loginService;
     private UserService userService;
 
