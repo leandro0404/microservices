@@ -22,6 +22,8 @@ spring:
     show-sql: true
     properties:
       hibernate.format_sql: true
+  kafka:
+    bootstrap-servers: http://localhost:9092
 
 springdoc:
   swagger-ui:
