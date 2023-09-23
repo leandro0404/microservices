@@ -26,12 +26,12 @@ services:
       - '27017:27017'
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: examplepassword
+      MONGO_INITDB_ROOT_PASSWORD: root
     volumes:
       - ./data/mongodb:/data/db  # Persiste os dados do MongoDB localmente
 
   mysql:
-    image: mysql:8.0
+    image: mysql:8.0  
     container_name: mysql
     ports:
       - '3306:3306'
