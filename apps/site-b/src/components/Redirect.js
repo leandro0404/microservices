@@ -10,7 +10,7 @@ const Redirect = () => {
         if(searchParams?.get('code')){
             const code = searchParams?.get('code');
             const client = 'app-site-b';
-            const secret = 'secret-b';
+            const secret = 'secret';
             const headers = new Headers();
             headers.append('Content-type', 'application/json');
             headers.append('Authorization', `Basic ${Buffer.from(`${client}:${secret}`).toString('base64')}`);
