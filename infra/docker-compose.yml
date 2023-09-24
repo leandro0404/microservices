@@ -2,9 +2,19 @@ version: '3.4'
 
 services:
 
+  zoo1:
+    image: zookeeper:3.4.9
+    container_name: zookeeper
+    hostname: zoo1
+    ports:
+      - '2181:2181'
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_PORT: 2181
+
   kafka:
     image: confluentinc/cp-kafka:5.5.1
-    container_name: sample-outbox-kafkabroker
+    container_name: kafkabroker
     hostname: kafka
     ports:
       - '9092:9092'

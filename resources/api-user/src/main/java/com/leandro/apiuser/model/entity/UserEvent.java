@@ -34,4 +34,7 @@ public class UserEvent {
     @Column(name = "processed_on")
     private Timestamp processedOn;
 
+    @Column(name = "transaction_id")
+    private UUID transactionId;
+
 }

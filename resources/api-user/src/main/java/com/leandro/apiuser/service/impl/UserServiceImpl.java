@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse get(String userName) {
-        return toObject(userRepository.findByUserName(userName));
+        return toObject(userRepository.findByUsername(userName));
 
     }
 
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     private User toObject(CreateUserRequest request) {
         var user = new User();
         user.setId(UUID.randomUUID());
-        user.setUserName(request.username());
+        user.setUsername(request.username());
         user.setPassword(passwordEncoder.encode(request.password()));
         return user;
     }
@@ -68,6 +68,6 @@ public class UserServiceImpl implements UserService {
 
     private UserResponse toObject(User user) {
 
-        return new UserResponse(user.getId(), user.getUserName(), user.getPassword());
+        return new UserResponse(user.getId(), user.getUsername(), user.getPassword());
     }
 }

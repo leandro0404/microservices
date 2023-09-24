@@ -15,7 +15,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("{userName}")
+    @GetMapping("{username}")
     public ResponseEntity<UserResponse> get(@PathVariable String userName) {
         return ResponseEntity.ok(userService.get(userName));
     }
