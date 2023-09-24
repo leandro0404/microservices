@@ -16,8 +16,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("{username}")
-    public ResponseEntity<UserResponse> get(@PathVariable String userName) {
-        return ResponseEntity.ok(userService.get(userName));
+    public ResponseEntity<UserResponse> get(@PathVariable String username) {
+        return ResponseEntity.ok(userService.get(username));
     }
 
     @PostMapping

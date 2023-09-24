@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserResponse get(String userName) {
-        return toObject(userRepository.findByUsername(userName));
+    public UserResponse get(String username) {
+        return toObject(userRepository.findByUsername(username));
 
     }
 
