@@ -1,0 +1,126 @@
+version: '3.4'
+
+services:
+
+  mysql:
+    image: mysql:8.0  
+    container_name: mysql
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./infra/data/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - microservices-network
+
+  zoo1:
+    image: zookeeper:3.4.9
+    container_name: zookeeper
+    hostname: zoo1
+    ports:
+      - '2181:2181'
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_PORT: 2181
+    networks:
+      - microservices-network
+
+  kafka:
+    image: confluentinc/cp-kafka:5.5.1
+    container_name: kafkabroker
+    hostname: kafka
+    ports:
+      - '9092:9092'
+      - '9999:9999'
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zoo1:2181'
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:19092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zoo1
+    networks:
+      - microservices-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - '27017:27017'
+    networks:
+      - microservices-network
+
+  api-user:
+    image: api-user
+    container_name: api-user
+    depends_on:
+      - mysql
+      - kafka
+    networks:
+      - microservices-network
+    environment:
+      - PORT=9006
+      - DB_HOST=mysql   # Altere o host do banco de dados para o nome do serviço do contêiner MySQL
+      - DB_PORT=3306
+      - DB_NAME=user
+      - DB_USER=root
+      - DB_PASSWORD=root
+    ports:
+      - 9006:9006
+
+  api-account:
+    image: api-account
+    container_name: api-account
+    depends_on:
+      - mysql
+      - kafka
+    networks:
+      - microservices-network
+    environment:
+      - PORT=9007
+      - DB_HOST=mysql   # Altere o host do banco de dados para o nome do serviço do contêiner MySQL
+      - DB_PORT=3306
+      - DB_NAME=account
+      - DB_USER=root
+      - DB_PASSWORD=root
+    ports:
+      - 9007:9007
+
+  api-application:
+    image: api-application
+    container_name: api-application
+    depends_on:
+      - mysql
+      - kafka
+    networks:
+      - microservices-network
+    environment:
+      - PORT=9005
+      - DB_HOST=mysql   # Altere o host do banco de dados para o nome do serviço do contêiner MySQL
+      - DB_PORT=3306
+      - DB_NAME=application
+      - DB_USER=root
+      - DB_PASSWORD=root
+    ports:
+      - 9005:9005
+
+  auth-server:
+    image: auth-server
+    container_name: auth-server
+    depends_on:
+      - mysql
+      - kafka
+    networks:
+      - microservices-network
+    environment:
+      - PORT=9002
+      - DB_HOST=mongodb
+    ports:
+      - 9002:9002
+
+networks:
+  microservices-network:
+    driver: bridge

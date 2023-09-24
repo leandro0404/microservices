@@ -64,7 +64,7 @@ public class SwaggerConfig {
     private Info info() {
 
         return new Info()
-                .title("Application Management API")
+                .title("User Management API")
                 .version("1.0")
                 .contact(contact())
                 .description("This API exposes endpoints to manage tutorials.").termsOfService("https://leandrosilveira.dev/")
