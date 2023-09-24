@@ -2,8 +2,12 @@ package com.leandro.authserver.repository.impl;
 
 import com.leandro.authserver.entity.User;
 import com.leandro.authserver.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -11,7 +15,6 @@ import reactor.core.publisher.Mono;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
-
 
     @Override
     public User findByUsername(String username) {
