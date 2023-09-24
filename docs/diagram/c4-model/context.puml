@@ -6,11 +6,17 @@ title Container Diagram for API Person
 Person(user, "User", "User")
 
 System_Boundary(Leandro, "Leandro") {
-    System_Boundary(auth, "Authentication") {
+
+
+     System_Boundary(event, "events") {
+        Container(kafka, "kafkaServer", "kafka events", "topic",)
+        
+    }
+
+     System_Boundary(auth, "Authentication") {
         Container(auth_service, "Auth Server", "Auth Server API", "Java Service", "Java", $sprite="java")
         ContainerDb(db_auth, "Database", "Auth Database", "Data", $sprite="mysql")
     }
-
     System_Boundary(product, "Product") {
         Container(site_a, "Site A", "Product A", "Java", $sprite="java")
         Container(site_b, "Site B", "Product B", "Java", $sprite="java")
@@ -48,8 +54,9 @@ System_Boundary(Leandro, "Leandro") {
     Rel(site_b,user_service, "use", "Http")
     Rel(site_b,application_service,   "use", "Http")
     Rel(site_b,account_service,  "use", "Http")
-
-  
+ 
+    Rel(user_service,kafka, "publish message create user", "")
+    Rel(kafka,account_service, "listener message create user", "")
 
    
 }
