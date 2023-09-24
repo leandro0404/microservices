@@ -68,6 +68,8 @@ services:
       - DB_NAME=user
       - DB_USER=root
       - DB_PASSWORD=root
+      - AUTH_SERVER_HOST=auth-server
+      - KAFKA_HOST=kafka
     ports:
       - 9006:9006
 
@@ -86,6 +88,8 @@ services:
       - DB_NAME=account
       - DB_USER=root
       - DB_PASSWORD=root
+      - AUTH_SERVER_HOST=auth-server
+      - KAFKA_HOST=kafka
     ports:
       - 9007:9007
 
@@ -104,6 +108,7 @@ services:
       - DB_NAME=application
       - DB_USER=root
       - DB_PASSWORD=root
+      - AUTH_SERVER_HOST=auth-server
     ports:
       - 9005:9005
 
@@ -118,6 +123,8 @@ services:
     environment:
       - PORT=9002
       - DB_HOST=mongodb
+      - API_USER_HOST=api-user
+      - AUTH_SERVER_HOST=auth-server
     ports:
       - 9002:9002
 

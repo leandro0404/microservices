@@ -2,12 +2,9 @@ package com.leandro.authserver.repository.impl;
 
 import com.leandro.authserver.entity.User;
 import com.leandro.authserver.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,22 +13,27 @@ import reactor.core.publisher.Mono;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
+    @Value(value = "${leandro.auth-server.host}")
+    private String authServerHost;
+    @Value(value = "${leandro.api-user.host}")
+    private String apiUserHost;
+
     @Override
     public User findByUsername(String username) {
 
-            var webClient = WebClient.builder()
-                    .baseUrl("http://localhost:9006")
-                    .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                    .defaultHeader(HttpHeaders.AUTHORIZATION,  token())
-                    .build();
+        var webClient = WebClient.builder()
+                .baseUrl("http://" + apiUserHost + ":9006")
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .defaultHeader(HttpHeaders.AUTHORIZATION, token())
+                .build();
 
-            var request = webClient.get()
-                    .uri("/user/" + username)
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(User.class);
+        var request = webClient.get()
+                .uri("/user/" + username)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(User.class);
 
-            return request.block();
+        return request.block();
 
 
     }
@@ -43,9 +45,9 @@ public class UserRepositoryImpl implements UserRepository {
         var token = "";
 
         var webClient = WebClient.builder()
-                .baseUrl("http://localhost:9006")
+                .baseUrl("http://" + apiUserHost + ":9006")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .defaultHeader(HttpHeaders.AUTHORIZATION,  token())
+                .defaultHeader(HttpHeaders.AUTHORIZATION, token())
                 .build();
 
         webClient.post()
@@ -54,15 +56,13 @@ public class UserRepositoryImpl implements UserRepository {
                 .body(Mono.just(user), User.class)
                 .retrieve()
                 .bodyToMono(String.class)
-                .subscribe(response -> {
-                    // Lide com a resposta da chamada POST aqui
-                });
+                .block();
 
     }
-    private String token()
-    {
+
+    private String token() {
         var client = WebClient.builder()
-                .baseUrl("http://localhost:9002/oauth2/token")
+                .baseUrl("http://"+authServerHost+":9002/oauth2/token")
                 .defaultHeader("Content-Type", "application/x-www-form-urlencoded")
                 .defaultHeader("Authorization", "Basic Y2xpZW50LWNyZWRlbnRpYWxzOnNlY3JldA==")
                 .build();
@@ -76,12 +76,12 @@ public class UserRepositoryImpl implements UserRepository {
                 .bodyToMono(TokenResponse.class)
                 .block();
 
-       return "bearer " + tokenResponse.access_token;
+        return "bearer " + tokenResponse.access_token;
     }
 
-    public record TokenResponse (String access_token,
-            String token_type,
-            int expires_in){
+    public record TokenResponse(String access_token,
+                                String token_type,
+                                int expires_in) {
 
 
     }

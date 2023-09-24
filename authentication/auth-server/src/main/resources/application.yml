@@ -10,3 +10,8 @@ spring:
     mongodb:
       uri: mongodb://${DB_HOST:localhost}:${DB_PORT:27017}/auth-server
 
+leandro:
+ api-user:
+  host: ${API_USER_HOST:localhost}
+ auth-server:
+  host: ${AUTH_SERVER_HOST:localhost}

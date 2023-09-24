@@ -6,7 +6,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9002
+          issuer-uri: http://${AUTH_SERVER_HOST:localhost}:9002
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:application}?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
