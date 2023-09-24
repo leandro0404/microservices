@@ -27,4 +27,9 @@ public class KafkaTopicConfig {
     public NewTopic topic() {
         return new NewTopic("create-user", 1, (short) 1);
     }
+
+    @Bean
+    public NewTopic errorTopic() {
+        return new NewTopic("create-user-error", 1, (short) 1);
+    }
 }

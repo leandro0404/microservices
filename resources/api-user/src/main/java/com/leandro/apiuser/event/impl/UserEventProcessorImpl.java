@@ -1,9 +1,6 @@
 package com.leandro.apiuser.event.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leandro.apiuser.event.UserEventProcessor;
-import com.leandro.apiuser.model.entity.UserEvent;
 import com.leandro.apiuser.repository.UserEventRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
