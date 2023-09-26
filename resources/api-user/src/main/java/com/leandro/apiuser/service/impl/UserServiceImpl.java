@@ -12,7 +12,6 @@ import com.leandro.apiuser.repository.UserRepository;
 import com.leandro.apiuser.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -25,8 +24,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserEventRepository userEventRepository;
-    private final PasswordEncoder passwordEncoder;
-
     @Override
     public UserResponse get(String username) {
         return toObject(userRepository.findByUsername(username));
@@ -45,7 +42,7 @@ public class UserServiceImpl implements UserService {
         var user = new User();
         user.setId(UUID.randomUUID());
         user.setUsername(request.username());
-        user.setPassword(passwordEncoder.encode(request.password()));
+        user.setPassword(request.password());
         return user;
     }
 

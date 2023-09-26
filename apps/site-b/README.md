@@ -1,15 +1,17 @@
-# Creating react application
+## Authorization Code Flow - Sample React Application
 
-- `npx create-react-app appName`
+### Setup Sample Application
 
-# Installing react-router and react-router-dom
-
-- `npm i --save-dev react-router react-router-dom`
-
-# Installing buffer
-
-- `npm i buffer`
-
-# Installing crypto-js
-
-- `npm i --save-dev crypto-js`
+1. Clone this application repository.
+2. Update the configurations in `src/config.js` file with proper values.
+```
+{
+    "RESPONSE_TYPE": "code",
+    "SCOPE": "<scopes seperated by space>",
+    "REDIRECT_URI": "http://localhost:3000",
+    "CLIENT_ID": "<client_id_of_the_application>",
+    "CLIENT_SECRET": "<client_secret_of_the_application>",
+    "GRANT_TYPE": "authorization_code"
+}
+```
+3. Go to the project folder and run `npm install && npm start`

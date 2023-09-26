@@ -21,14 +21,14 @@ public class LoginServiceImpl implements LoginService {
     public String layout(HttpServletRequest request, Model model) {
 
 
-        if (!ObjectUtils.isEmpty(request.getHeader("Referer")))
-        {
+        if (!ObjectUtils.isEmpty(request.getHeader("Referer"))) {
 
-         var client =   clientService.findByRedirectUris(request.getHeader("Referer"));
-            model.addAttribute("clientId", client.getClientId());
-            return client.getClientId();
+            var client = clientService.findByRedirectUris(request.getHeader("Referer"));
+            if (!ObjectUtils.isEmpty(client)) {
+                model.addAttribute("clientId", client.getClientId());
+                return client.getClientId();
+            }
         }
-
         return "login";
     }
 }
