@@ -27,7 +27,7 @@ public class UserEventProcessorImpl implements UserEventProcessor {
     private final UserEventRepository userEventRepository;
 
     @Override
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 30000)
     @Transactional
     public void send() {
 
