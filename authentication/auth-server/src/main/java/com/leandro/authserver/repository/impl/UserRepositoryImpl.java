@@ -62,7 +62,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private String token() {
         var client = WebClient.builder()
-                .baseUrl(apiUserHost+":9002/oauth2/token")
+                .baseUrl(apiUserHost+"/oauth2/token")
                 .defaultHeader("Content-Type", "application/x-www-form-urlencoded")
                 .defaultHeader("Authorization", "Basic Y2xpZW50LWNyZWRlbnRpYWxzOnNlY3JldA==")
                 .build();
