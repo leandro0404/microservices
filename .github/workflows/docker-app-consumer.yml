@@ -1,0 +1,40 @@
+name: Build and Publish app consumer Docker Image
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build_and_publish_api_mock:
+    name: Build and Publish Docker (App Consumer)
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies (npm) in the subdirectory
+        working-directory: apps/consumer
+        run: npm install
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Docker Hub
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image (Subdirectory)
+        working-directory: apps/consumer
+        run: |
+          docker buildx create --use
+          docker buildx build -t leandrobhmg/app-consumer:${{ github.ref_name }} . --push
