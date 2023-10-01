@@ -22,7 +22,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User findByUsername(String username) {
 
         var webClient = WebClient.builder()
-                .baseUrl("http://" + apiUserHost + ":9006")
+                .baseUrl(apiUserHost)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.AUTHORIZATION, token())
                 .build();
@@ -45,7 +45,7 @@ public class UserRepositoryImpl implements UserRepository {
         var token = "";
 
         var webClient = WebClient.builder()
-                .baseUrl("http://" + apiUserHost + ":9006")
+                .baseUrl(apiUserHost)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.AUTHORIZATION, token())
                 .build();
@@ -62,7 +62,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private String token() {
         var client = WebClient.builder()
-                .baseUrl("http://"+authServerHost+":9002/oauth2/token")
+                .baseUrl(apiUserHost+":9002/oauth2/token")
                 .defaultHeader("Content-Type", "application/x-www-form-urlencoded")
                 .defaultHeader("Authorization", "Basic Y2xpZW50LWNyZWRlbnRpYWxzOnNlY3JldA==")
                 .build();
