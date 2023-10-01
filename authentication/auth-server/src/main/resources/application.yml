@@ -3,11 +3,10 @@ server:
 spring:
   data:
     mongodb:
-      user: ${MONGO_USER}
-      password: ${MONGO_PASSWORD}
+      database: auth-server
       uri: ${MONGO_URI}
 leandro:
- api-user:
-  host: ${API_USER_HOST}
- auth-server:
-  host: ${AUTH_SERVER_HOST}
+  api-user:
+    host: ${API_USER_HOST}
+  auth-server:
+    host: ${AUTH_SERVER_HOST}
