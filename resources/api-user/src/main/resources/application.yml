@@ -5,25 +5,27 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://${AUTH_SERVER_HOST:localhost}:9002
+          issuer-uri: ${AUTH_SERVER_HOST}
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:user}?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
-    username: ${DB_USER:root}
-    password: ${DB_PASSWORD:root}
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:${USER_DB_CONNECTION}
+    username: ${USER_DB_USER_NAME}
+    password: ${USER_DB_PASSWORD}
     initialization-mode: always
     initialize: true
     continue-on-error: true
+    platform: postgresql
+    maxActive: 3
   jpa:
-    defer-datasource-initialization: true
     hibernate:
-      ddl-auto: update
-    generate-ddl: false
-    show-sql: true
+      ddl-auto: create-drop
+      format_sql: true
+    show_sql: true
     properties:
-      hibernate.format_sql: true
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
   kafka:
-    bootstrap-servers: http://localhost:9092
+    bootstrap-servers: ${KAFKA_SERVER_HOST}
 
 springdoc:
   swagger-ui:
@@ -35,5 +37,5 @@ springdoc:
 
 leandro:
   openapi:
-    dev-url: http://localhost:9006
-    prod-url: https://appication-api.com
+    dev-url: ${USER_SERVER_HOST}
+    prod-url: ${USER_SERVER_HOST

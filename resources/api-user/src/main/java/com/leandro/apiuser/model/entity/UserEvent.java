@@ -1,9 +1,6 @@
 package com.leandro.apiuser.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,12 +8,13 @@ import java.util.UUID;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "user-event")
+@Table(name = "user-events")
 @Getter
 @Setter
 public class UserEvent {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "user_id")
