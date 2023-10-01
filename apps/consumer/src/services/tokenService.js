@@ -17,7 +17,7 @@ export const sendTokenRequest = (code) => {
 
 
     const headers = {
-        "Authorization": "Basic YXBwLXNpdGUtYjpzZWNyZXQ=",
+        "Authorization": CONFIG.BASIC_TOKEN,
         "Content-Type": "application/x-www-form-urlencoded",
         "Accept": "application/json",
       };
