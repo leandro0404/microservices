@@ -24,7 +24,7 @@ jobs:
         run: cp -r resources/api-user $GITHUB_WORKSPACE
 
       - name: Build JAR without tests
-        run: mvn package -DskipTests
+        run: cd resources/api-user && mvn package -DskipTests
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
