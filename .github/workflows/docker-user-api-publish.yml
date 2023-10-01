@@ -38,4 +38,4 @@ jobs:
       - name: Build and push Docker image (Root)
         run: |
           docker buildx create --use
-          docker buildx build -t leandrobhmg/api-user:${{ github.ref_name }} . --push
+          docker buildx build -t leandrobhmg/api-user:${{ github.ref_name }} -f resources/api-user/Dockerfile resources/api-user --push
