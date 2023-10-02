@@ -3,7 +3,7 @@ import {CONFIG} from "../config";
 
 
 export const sendAuthorizationRequest = () => {
-    let authorizeRequest = `http://localhost:9002/oauth2/authorize?response_type=${ CONFIG.RESPONSE_TYPE }&scope=${ CONFIG.SCOPE }&redirect_uri=${ CONFIG.REDIRECT_URI }&client_id=${ CONFIG.CLIENT_ID }`;
+    let authorizeRequest = `${ CONFIG.AUTH_SERVER }/oauth2/authorize?response_type=${ CONFIG.RESPONSE_TYPE }&scope=${ CONFIG.SCOPE }&redirect_uri=${ CONFIG.REDIRECT_URI }&client_id=${ CONFIG.CLIENT_ID }`;
     window.location.href = authorizeRequest;
 };
 
@@ -17,13 +17,13 @@ export const sendTokenRequest = (code) => {
 
 
     const headers = {
-        "Authorization": "Basic YXBwLXNpdGUtYjpzZWNyZXQ=",
+        "Authorization": CONFIG.BASIC_TOKEN,
         "Content-Type": "application/x-www-form-urlencoded",
         "Accept": "application/json",
       };
     
       return axios
-        .post(`http://localhost:9002/oauth2/token`, body.join("&"), { headers })
+        .post(`${ CONFIG.AUTH_SERVER }/oauth2/token`, body.join("&"), { headers })
         .then((response) => {
           if (response.status !== 200) {
             return Promise.reject(
