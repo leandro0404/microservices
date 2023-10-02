@@ -21,6 +21,8 @@ public class CorsConfig implements Filter {
     @Autowired
     public CorsConfig(@Value("${spring.security.cors.allowed-origins:*}") Set<String> allowedOrigins) {
         allowedOrigins.add("https://microservices-app-consumer.onrender.com");
+        allowedOrigins.add("https://microservices-app-creator.onrender.com");
+        allowedOrigins.add("https://microservices-app-account.onrender.com");
         this.allowedOrigins = allowedOrigins;
     }
 
