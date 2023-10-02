@@ -23,6 +23,9 @@ public class CorsConfig implements Filter {
         allowedOrigins.add("https://microservices-app-consumer.onrender.com");
         allowedOrigins.add("https://microservices-app-creator.onrender.com");
         allowedOrigins.add("https://microservices-app-account.onrender.com");
+        allowedOrigins.add("http://localhost:3000");
+        allowedOrigins.add("https://h1ywtx.csb.app");
+        allowedOrigins.add("*");
         this.allowedOrigins = allowedOrigins;
     }
 
