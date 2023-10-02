@@ -1,0 +1,39 @@
+@startuml
+
+start
+:Usuário acessa a aplicação;
+if (O usuário está logado?) then (Sim)
+  :Redirecionar para a última aplicação acessada;
+else (Não)
+  :Exibir tela de login;
+  if (Login bem-sucedido?) then (Sim)
+    :Redirecionar para a aplicação padrão;
+  else (Não)
+    :Exibir mensagem de erro;
+  endif
+endif
+
+if (O usuário deseja definir uma aplicação padrão?) then (Sim)
+  :Exibir opções de aplicativos;
+  :Usuário seleciona a aplicação padrão desejada;
+  :Salvar a escolha do usuário;
+else (Não)
+  :Definir a aplicação padrão com base na última aplicação acessada;
+endif
+
+:Usuário logado na aplicação desejada;
+
+note right
+Texto explicativo:
+- Este é o ponto de partida.
+- Se o usuário já está logado, ele é redirecionado para a última aplicação acessada.
+- Caso contrário, ele passa pela tela de login.
+- Se o login for bem-sucedido, ele é redirecionado para a aplicação padrão.
+- Se não, uma mensagem de erro é exibida.
+- O usuário pode definir uma aplicação padrão se desejar.
+- Caso contrário, a última aplicação acessada se torna a padrão.
+end note
+
+stop
+
+@enduml
