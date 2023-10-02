@@ -36,17 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-.title {
-  margin-top: 40px;
-  margin-bottom: 60px;
-  text-align: center;
-}
-
-#token-response {
-  text-align: left;
-  display: block;
-  overflow: auto;
-  word-break: break-all;
-  margin:auto;
-}

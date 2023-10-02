@@ -1,15 +1,28 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { AuthProvider } from 'oidc-react';
+import {CONFIG} from "./config";
+const oidcConfig = {
+  onSignIn: () => {
+    // Redirect?
+  },
+  authority: CONFIG.AUTH_SERVER,
+  clientId: CONFIG.CLIENT_ID,
+  redirectUri: CONFIG.REDIRECT_URI,
+};
 
-ReactDOM.render(
+
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+      <AuthProvider {...oidcConfig}>
+      <App />
+      </AuthProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
