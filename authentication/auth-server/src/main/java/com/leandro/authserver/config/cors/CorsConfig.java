@@ -20,7 +20,7 @@ public class CorsConfig implements Filter {
 
     @Autowired
     public CorsConfig(@Value("${spring.security.cors.allowed-origins:*}") Set<String> allowedOrigins) {
-        allowedOrigins.add("http://localhost:3000");
+        allowedOrigins.add("https://microservices-app-consumer.onrender.com");
         this.allowedOrigins = allowedOrigins;
     }
 
