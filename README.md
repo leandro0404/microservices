@@ -33,3 +33,4 @@ Cada uma das APIs é independente, se comunica por meio de eventos e possui seu 
 
 
 ![class.png](docs/diagram/c4-model/images/context.svg)
+![class.png](docs/diagram/c4-model/images/login.svg)
