@@ -1,0 +1,48 @@
+@startuml
+start
+:Usuário acessa a aplicação;
+if (O usuário está logado?) then (Sim)
+  :Consultar API de aplicativos por usuário;
+  if (Aplicação padrão definida na API?) then (Sim)
+    :Redirecionar para a aplicação padrão da API;
+  else (Não)
+    :Redirecionar para a última aplicação acessada;
+  endif
+else (Não)
+  :Exibir tela de login;
+  if (Login bem-sucedido?) then (Sim)
+    :Consultar API de aplicativos por usuário;
+    if (Aplicação padrão definida na API?) then (Sim)
+      :Redirecionar para a aplicação padrão da API;
+    else (Não)
+      :Redirecionar para a última aplicação acessada;
+    endif
+  else (Não)
+    :Exibir mensagem de erro;
+  endif
+endif
+
+if (O usuário deseja definir uma aplicação padrão?) then (Sim)
+  :Exibir opções de aplicativos;
+  :Usuário seleciona a aplicação padrão desejada;
+  :Atualizar API de aplicativos com a escolha do usuário;
+else (Não)
+  :Definir a aplicação padrão com base na última aplicação acessada;
+endif
+
+:Usuário logado na aplicação desejada;
+
+note right
+Texto explicativo:
+- Este é o ponto de partida.
+- Se o usuário já está logado, consultamos a API de aplicativos para obter a aplicação padrão definida.
+- Se não houver uma aplicação padrão na API, redirecionamos para a última aplicação acessada.
+- Caso contrário, redirecionamos para a aplicação padrão da API.
+- Se o login não for bem-sucedido, uma mensagem de erro é exibida.
+- O usuário pode definir uma aplicação padrão se desejar.
+- A escolha do usuário é atualizada na API de aplicativos.
+- Caso contrário, a última aplicação acessada se torna a padrão.
+end note
+
+stop
+@enduml
