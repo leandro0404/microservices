@@ -25,7 +25,7 @@ public class CorsConfig implements Filter {
         allowedOrigins.add("https://microservices-app-account.onrender.com");
         allowedOrigins.add("http://localhost:3000");
         allowedOrigins.add("https://leandro0404.github.io/microservices-app-account");
-        allowedOrigins.add("*");
+        allowedOrigins.add("https://leandro0404.github.io");
         this.allowedOrigins = allowedOrigins;
     }
 
